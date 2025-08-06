@@ -35,8 +35,8 @@ This directory contains complete examples demonstrating how to use the Azure DNS
 This example demonstrates creating DNS zones from YAML configuration files:
 
 **Files:**
-- [`zones/example.com.yaml`](zones/example.com.yaml) - Complete example with all DNS record types
-- [`zones/sub.example.com.yaml`](zones/sub.example.com.yaml) - Subdomain delegation example
+- [`zones/example.com.yaml`](https://github.com/sEpt0r/terraform-azurerm-dns-from-yaml/blob/main/zones/example.com.yaml) - Complete example with all DNS record types
+- [`zones/sub.example.com.yaml`](https://github.com/sEpt0r/terraform-azurerm-dns-from-yaml/blob/main/zones/sub.example.com.yaml) - Subdomain delegation example
 
 **Configuration:**
 ```hcl
@@ -208,7 +208,7 @@ module "production_zones" {
   for_each = var.environment == "production" ? var.production_zones : {}
 
   dns_records         = each.value
-  zone_name          = each.key
+  zone_name           = each.key
   resource_group_name = var.resource_group_name
 }
 ```
@@ -272,4 +272,4 @@ terraform plan
 4. Set up CI/CD for automated deployments
 5. Implement monitoring and alerting for DNS changes
 
-For more advanced usage patterns, see the main [README.md](../README.md).
+For more advanced usage patterns, see the main [README.md](https://github.com/sEpt0r/terraform-azurerm-dns-from-yaml/blob/main/README.md).

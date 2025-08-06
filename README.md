@@ -16,7 +16,7 @@ This Terraform module creates Azure DNS zones and all record types from YAML con
 
 ```hcl
 module "dns_zone" {
-  source = "sept0r/azure-dns-from-yaml/azurerm"
+  source = "sEpt0r/dns-from-yaml/azurerm"
 
   resource_group_name = "my-dns-rg"
   zone_name           = "example.com"
@@ -80,7 +80,7 @@ variable "zone_files" {
 }
 
 module "dns_records_from_yaml" {
-  source = "sept0r/azure-dns-from-yaml/azurerm"
+  source = "sEpt0r/dns-from-yaml/azurerm"
 
   for_each = {
     for zone_file in var.zone_files :
@@ -129,7 +129,7 @@ variable "dns_records" {
 }
 
 module "dns_records_from_var" {
-    source = "sept0r/azure-dns-from-yaml/azurerm"
+    source = "sEpt0r/dns-from-yaml/azurerm"
 
     for_each = var.dns_records
 
@@ -147,7 +147,7 @@ Automatically create NS records in a parent zone for subdomain delegation:
 
 ```hcl
 module "subdomain_zone" {
-  source = "sept0r/azure-dns-from-yaml/azurerm"
+  source = "sEpt0r/dns-from-yaml/azurerm"
 
   zone_name           = "api.example.com"
   parent_zone         = "example.com"  # Creates NS records in parent
@@ -160,7 +160,7 @@ module "subdomain_zone" {
 
 ```hcl
 module "dns_zone" {
-  source = "sept0r/azure-dns-from-yaml/azurerm"
+  source = "sEpt0r/dns-from-yaml/azurerm"
 
   zone_name           = "example.com"
   resource_group_name = "my-dns-rg"
@@ -290,7 +290,8 @@ subdomain:
     ttl: 3600
 ```
 
-> **Note**: See `example/zones/example.com.yaml` for a complete working example with all record types.
+> [!NOTE]
+> See `example/zones/example.com.yaml` for a complete working example with all record types.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -346,12 +347,12 @@ No modules.
 
 ## Examples
 
-Complete examples are available in the [`example/`](example/) directory:
+Complete examples are available in the [`example/`](https://github.com/sEpt0r/terraform-azurerm-dns-from-yaml/tree/main/example) directory:
 
-- **[Basic YAML Usage](example/main.tf)**: Creating zones from YAML files
-- **[Variable Usage](example/main.tf)**: Creating zones from Terraform variables
-- **[Complete Record Types](example/zones/example.com.yaml)**: All supported DNS record types
-- **[Subdomain Example](example/zones/sub.example.com.yaml)**: Subdomain configuration
+- **[Basic YAML Usage](https://github.com/sEpt0r/terraform-azurerm-dns-from-yaml/tree/main/example/main.tf)**: Creating zones from YAML files
+- **[Variable Usage](https://github.com/sEpt0r/terraform-azurerm-dns-from-yaml/tree/main/example/main.tf)**: Creating zones from Terraform variables
+- **[Complete Record Types](https://github.com/sEpt0r/terraform-azurerm-dns-from-yaml/tree/main/example/zones/example.com.yaml)**: All supported DNS record types
+- **[Subdomain Example](https://github.com/sEpt0r/terraform-azurerm-dns-from-yaml/tree/main/example/zones/sub.example.com.yaml)**: Subdomain configuration
 
 ## Validation and Best Practices
 
@@ -396,8 +397,8 @@ www:
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/sEpt0r/terraform-azurerm-dns-from-yaml/blob/main/LICENSE) file for details.
 
 ## Issues
 
-- 🐛 [Report Issues](https://github.com/sept0r/azure-dns-from-yaml/azurerm
+- 🐛 [Report Issues](https://github.com/sEpt0r/terraform-azurerm-dns-from-yaml/issues)
