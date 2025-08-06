@@ -1,0 +1,25 @@
+# This file is a YAML representation of a simple zone file.
+"@":
+  A:
+    records:
+      - 10.10.10.1
+      - 10.10.10.2
+  MX:
+    records:
+      - exchange: mail.sub.example.com
+        preference: 10
+      - exchange: mail2.example.com
+        preference: 20
+  NS:
+    records:
+      - ns1.sub.example.com
+      - ns2.sub.example.com
+      - ns3.sub.example.com
+      - ns4.sub.example.com
+  TXT:
+    records:
+      - "v=spf1 a mx ~all"
+
+www:
+  CNAME:
+    record: sub.example.com

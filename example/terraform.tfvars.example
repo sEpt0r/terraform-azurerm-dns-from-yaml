@@ -1,0 +1,56 @@
+# Azure Configuration
+subscription_id     = "12345678-1234-5678-9012-123456789012"
+resource_group_name = "my-dns-resource-group"
+
+# YAML Zone Files
+# List of YAML files containing DNS zone configurations
+# File names should match the DNS zone name (e.g., example.com.yaml)
+zone_files = [
+  "zones/example.com.yaml",
+  "zones/sub.example.com.yaml"
+]
+
+# Alternative: DNS Records as Terraform Variables
+# Uncomment and customize the dns_records block below to use Terraform variables
+# instead of YAML files for DNS configuration
+
+# dns_records = {
+#   "mycompany.com" = {
+#     "@" = {
+#       A = {
+#         records = ["203.0.113.1", "203.0.113.2"]
+#         ttl     = 300
+#         tags = {
+#           Environment = "production"
+#         }
+#       }
+#       MX = {
+#         records = [
+#           {
+#             exchange   = "mail.mycompany.com"
+#             preference = 10
+#           }
+#         ]
+#         ttl = 3600
+#       }
+#       TXT = {
+#         records = [
+#           "v=spf1 a mx ~all",
+#           "google-site-verification=abc123def456"
+#         ]
+#       }
+#     }
+#     www = {
+#       CNAME = {
+#         record = "mycompany.com"
+#         ttl    = 3600
+#       }
+#     }
+#     api = {
+#       A = {
+#         records = ["203.0.113.100"]
+#         ttl     = 300
+#       }
+#     }
+#   }
+# }

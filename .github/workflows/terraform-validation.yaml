@@ -1,0 +1,87 @@
+name: Validate terraform code and documentation
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+    inputs:
+      terraform_version:
+        description: 'Terraform version'
+        required: false
+        type: string
+        default: '1.12.2'
+      tflint_version:
+        description: 'TFLint version'
+        required: false
+        type: string
+        default: 'v0.58.1'
+      terraform_docs_working-dir:
+        description: 'Terraform docs working directory'
+        required: false
+        type: string
+        default: '.'
+      terraform_docs_atlantis-file:
+        description: 'Terraform docs atlantis file'
+        required: false
+        type: string
+        default: 'disabled'
+      terraform_docs_output-file:
+        description: 'Terraform docs output file'
+        required: false
+        type: string
+        default: 'README.md'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ inputs.terraform_version }}
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: ${{ inputs.tflint_version }}
+
+      - name: Show TFLint version
+        run: tflint --version
+
+      - name: Init TFLint
+        run: tflint --init
+        env:
+          # Avoiding rate limiting: https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Run terraform-docs
+        uses: terraform-docs/gh-actions@v1.4.1
+        with:
+          atlantis-file: ${{ inputs.terraform_docs_atlantis-file }}
+          working-dir: ${{ inputs.terraform_docs_working-dir }}
+          output-file: ${{ inputs.terraform_docs_output-file }}
+          output-method: inject
+          git-push: "true"
+
+      - name: Run terraform fmt and validate
+        run: |
+          terraform fmt -recursive .
+          terraform init -upgrade && terraform validate
+          if ! git diff --exit-code --no-patch;then
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            git add .
+            git commit -m 'GitHub actions `terraform fmt`'
+            git push
+          fi
+
+      - name: Run tflint
+        run: |
+          tflint --init && tflint -f compact

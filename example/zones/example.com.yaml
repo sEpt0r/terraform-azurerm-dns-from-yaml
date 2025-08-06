@@ -1,0 +1,119 @@
+# This is an example zone file that contains all the supported record types.
+# ttl is an optional for each record. If not specified, the default ttl from the module will be used.
+"@":
+  SOA:
+    email: azuredns-hostmaster.example.com
+    host_name: ns1-00.azure-dns.com.
+    expire_time: 2419200
+    minimum_ttl: 300
+    refresh_time: 3600
+    retry_time: 300
+    serial_number: 1
+    ttl: 3600
+    tags:
+      key1: value1
+      key2: value2
+  A:
+    records:
+      - 10.10.10.1
+    tags:
+      key3: value3
+  AAAA:
+    records:
+      - 2001:db8::1
+  MX:
+    records:
+      - exchange: mail.example.com
+        preference: 10
+
+blog:
+  A:
+    records:
+      - 10.10.10.2
+      - 10.10.10.3
+  AAAA:
+    records:
+      - 2001:db8::2
+      - 2001:db8::3
+  CAA:
+    records:
+      - flags: 0
+        tag: issue
+        value: "letsencrypt.org"
+  MX:
+    records:
+      - exchange: mail1.example.com
+        preference: 10
+      - exchange: mail2.example.com
+        preference: 20
+  NS:
+    records:
+      - ns1.example.com
+      - ns2.example.com
+  PTR:
+    records:
+      - record1.example.com
+      - record2.example.com
+  SRV:
+    records:
+      - priority: 10
+        weight: 10
+        port: 80
+        target: record1.example.com
+  TXT:
+    records:
+      - "v=spf1 a mx ~all"
+      - "google-site-authenticator"
+
+news:
+  A:
+    records:
+      - 10.10.20.4
+    ttl: 3600
+  AAAA:
+    records:
+      - 2001:db8::4
+    ttl: 3600
+  CAA:
+    records:
+      - flags: 0
+        tag: issue
+        value: "letsencrypt.org"
+    ttl: 3600
+  MX:
+    records:
+      - exchange: mail3.example.com
+        preference: 10
+      - exchange: mail4.example.com
+        preference: 20
+    ttl: 3600
+  NS:
+    records:
+      - ns3.example.com
+      - ns4.example.com
+    ttl: 3600
+  PTR:
+    records:
+      - record3.example.com
+    ttl: 3600
+  SRV:
+    records:
+      - priority: 20
+        weight: 20
+        port: 80
+        target: record2.example.com
+    ttl: 3600
+  TXT:
+    records:
+      - "v=spf1 a mx ~all"
+      - "google-site-authenticator"
+    ttl: 3600
+
+www.blog:
+  CNAME:
+    record: blog.example.com
+
+www.news:
+  CNAME:
+    record: news.example.com
+    ttl: 3600
